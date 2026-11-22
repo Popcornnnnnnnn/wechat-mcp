@@ -5,6 +5,8 @@
 [![Platform: macOS](https://img.shields.io/badge/platform-macOS-lightgrey)](https://www.apple.com/macos/)
 [![FastMCP Tools](https://img.shields.io/badge/FastMCP-40%20Tools-success)](https://modelcontextprotocol.io/)
 
+**English** | [简体中文](README_CN.md)
+
 Unified macOS WeChat Model Context Protocol (MCP) server, pure-Python SQLCipher 4 database decryptor, and multi-shard message query engine.
 
 `wechat-mcp` unifies macOS WeChat database decryption, multi-shard history querying, FastMCP tooling, REST API serving, and anti-recall monitoring in a single package licensed under GNU General Public License v3.0 (GPL-3.0-or-later).

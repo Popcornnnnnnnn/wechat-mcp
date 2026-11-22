@@ -63,6 +63,7 @@ include = [
     "/src/wechat_mcp",
     "/tests",
     "/README.md",
+    "/README_CN.md",
     "/LICENSE",
     "/config.example.json",
     "/pyproject.toml",
