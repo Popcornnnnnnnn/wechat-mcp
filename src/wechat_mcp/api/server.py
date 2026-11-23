@@ -24,6 +24,7 @@ from typing import Any, Dict, List, Optional
 from fastapi import FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 
+from wechat_mcp import __version__
 from wechat_mcp.config import Config, load_config
 from wechat_mcp.crypto.sync import SyncManager
 from wechat_mcp.db.reader import HistoryReader
@@ -36,7 +37,7 @@ def create_api_app(
     reader: Optional[HistoryReader] = None,
 ) -> FastAPI:
     """Create FastAPI application exposing backwards-compatible REST endpoints on port 8300."""
-    app = FastAPI(title="WeChat MCP REST Service", version="0.1.0")
+    app = FastAPI(title="WeChat MCP REST Service", version=__version__)
 
     # Add CORS middleware for local background intake scripts and companion tools
     app.add_middleware(

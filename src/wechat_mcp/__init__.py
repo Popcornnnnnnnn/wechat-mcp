@@ -15,4 +15,4 @@
 
 """wechat-mcp: Unified macOS WeChat MCP server, database decryptor, and history service."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

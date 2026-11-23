@@ -26,6 +26,7 @@ from click.testing import CliRunner
 import pytest
 
 from tests.fixtures.crypto_generator import generate_synthetic_encrypted_db
+from wechat_mcp import __version__
 from wechat_mcp.cli import main
 from wechat_mcp.config import AccountInfo, Config
 
@@ -56,10 +57,10 @@ def test_cli_help_lists_all_subcommands(cli_runner: CliRunner):
 
 
 def test_cli_version_flag(cli_runner: CliRunner):
-    """wechat-mcp --version outputs version 0.1.0."""
+    """wechat-mcp --version outputs the package version."""
     result = cli_runner.invoke(main, ["--version"])
     assert result.exit_code == 0
-    assert "0.1.0" in result.output
+    assert __version__ in result.output
 
 
 def test_cli_invalid_command_exit_code(cli_runner: CliRunner):

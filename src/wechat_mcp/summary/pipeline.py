@@ -24,6 +24,7 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict, List, Optional
 
+from wechat_mcp import __version__
 from wechat_mcp.summary.schema import (
     CheckStageSchema,
     Citation,
@@ -111,7 +112,7 @@ class SummaryPipeline:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "User-Agent": "wechat-mcp/0.1.0",
+            "User-Agent": f"wechat-mcp/{__version__}",
         }
         payload = {
             "model": self.model,

@@ -40,11 +40,22 @@ flowchart LR
    sudo DevToolsSecurity -enable
    sudo dscl . append /Groups/_developer GroupMembership "$(whoami)"
    ```
-3. Install:
+3. Install with [Homebrew](https://brew.sh/) (recommended):
    ```bash
+   brew install Popcornnnnnnnn/tap/wechat-mcp
+   ```
+   Update anytime with:
+   ```bash
+   wechat-mcp upgrade
+   ```
+   Or install with `uv` from the GitHub Release wheel (or from source):
+   ```bash
+   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.1/wechat_mcp-0.1.1-py3-none-any.whl
+   # or from source:
    git clone https://github.com/Popcornnnnnnnn/wechat-mcp.git && cd wechat-mcp
    pip install .                # or: uv pip install -e ".[dev]"
    ```
+   Interactive CLI commands check GitHub Releases at most once every 24 hours (never during `mcp`/`serve` stdio or non-TTY runs); set `WECHAT_MCP_NO_UPDATE_CHECK=1` to disable.
 
 ## Quick Start
 

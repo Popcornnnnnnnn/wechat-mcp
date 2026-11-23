@@ -40,11 +40,22 @@ flowchart LR
    sudo DevToolsSecurity -enable
    sudo dscl . append /Groups/_developer GroupMembership "$(whoami)"
    ```
-3. 安装：
+3. 通过 [Homebrew](https://brew.sh/) 安装（推荐）：
    ```bash
+   brew install Popcornnnnnnnn/tap/wechat-mcp
+   ```
+   随时检查并升级：
+   ```bash
+   wechat-mcp upgrade
+   ```
+   或使用 `uv` 从 GitHub Release wheel 安装（或从源码安装）：
+   ```bash
+   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.1/wechat_mcp-0.1.1-py3-none-any.whl
+   # 或源码安装：
    git clone https://github.com/Popcornnnnnnnn/wechat-mcp.git && cd wechat-mcp
    pip install .                # 或使用 uv: uv pip install -e ".[dev]"
    ```
+   交互式 CLI 命令每 24 小时最多在后台检查一次更新（不会向 `mcp`/`serve` stdio 或非 TTY 输出任何提示）；设置 `WECHAT_MCP_NO_UPDATE_CHECK=1` 可关闭。
 
 ## 快速开始
 

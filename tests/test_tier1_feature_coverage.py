@@ -829,7 +829,7 @@ def test_f9_01_cli_entrypoint_help_and_version():
 
     res_ver = runner.invoke(main, ["--version"])
     assert res_ver.exit_code == 0
-    assert "0.1.0" in res_ver.output
+    assert "0.1.1" in res_ver.output
 
 
 def test_f9_02_cli_subcommand_dispatch():

@@ -25,16 +25,25 @@ from typing import Optional
 
 import click
 
+from wechat_mcp import __version__
 from wechat_mcp.config import discover_accounts, load_config
 from wechat_mcp.crypto.decrypt import decrypt_database
 from wechat_mcp.crypto.sync import SyncManager
+from wechat_mcp.update import maybe_notify_update, run_upgrade
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("wechat_mcp.cli")
 
 
+def _notify_update_safe(subcommand: str | None) -> None:
+    try:
+        maybe_notify_update(__version__, subcommand=subcommand)
+    except Exception:
+        pass
+
+
 @click.group()
-@click.version_option(version="0.1.0", prog_name="wechat-mcp")
+@click.version_option(version=__version__, prog_name="wechat-mcp")
 @click.option("--config", "-c", type=click.Path(dir_okay=False), default=None, help="Path to config.json file")
 @click.option("--verbose", "-v", is_flag=True, default=False, help="Enable debug logging output")
 @click.pass_context
@@ -46,6 +55,7 @@ def main(ctx: click.Context, config: str | None, verbose: bool) -> None:
     if verbose:
         logging.getLogger().setLevel(logging.DEBUG)
         logger.setLevel(logging.DEBUG)
+    ctx.call_on_close(lambda: _notify_update_safe(ctx.invoked_subcommand))
 
 
 def _resolve_config_path(ctx: click.Context, local_config: str | None) -> str | None:
@@ -371,6 +381,16 @@ def serve(ctx: click.Context, host: str | None, port: int | None, mcp_port: int 
         )
         api_thread.start()
         mcp_srv.run(transport="sse", host=bind_host, port=sse_p)
+
+
+@main.command()
+@click.option("--check", is_flag=True, default=False, help="Check for updates without installing")
+@click.option("--json", "as_json", is_flag=True, default=False, help="Print update check result as JSON")
+def upgrade(check: bool, as_json: bool) -> None:
+    """Check for new wechat-mcp releases and upgrade the installed tool."""
+    code = run_upgrade(check_only=check, as_json=as_json)
+    if code != 0:
+        sys.exit(code)
 
 
 if __name__ == "__main__":
