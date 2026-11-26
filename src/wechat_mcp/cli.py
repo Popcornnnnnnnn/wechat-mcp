@@ -293,6 +293,8 @@ def recall(ctx: click.Context, interval: float, archive_dir: str | None, db_dir:
         logger.debug("Config load note: %s", e)
 
     target_db_dir = Path(db_dir) if db_dir else (cfg.decrypted_dir if cfg else Path("decrypted"))
+    if not db_dir and cfg is None and not target_db_dir.is_dir():
+        raise click.ClickException("No WeChat database directory found. Pass --db-dir or check your configuration.")
     archive_path = (Path(archive_dir) / "recall-archive.sqlite") if archive_dir else (
         cfg.recall_archive_path if cfg and cfg.recall_archive_path else None
     )

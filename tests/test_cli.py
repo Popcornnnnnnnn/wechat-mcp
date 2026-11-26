@@ -245,6 +245,25 @@ def test_cli_recall_once_mode(cli_runner: CliRunner, tmp_path: Path):
             assert "Scan complete. Detected 0 recalled messages." in result.output
 
 
+@pytest.mark.parametrize("existing_directory", [False, True])
+def test_cli_recall_without_config(cli_runner, tmp_path, monkeypatch, existing_directory):
+    monkeypatch.chdir(tmp_path)
+    decrypted_dir = tmp_path / "decrypted"
+    if existing_directory:
+        decrypted_dir.mkdir()
+
+    with patch("wechat_mcp.cli.load_config", side_effect=ValueError("No local configuration")):
+        result = cli_runner.invoke(main, ["recall", "--once"])
+
+    if existing_directory:
+        assert result.exit_code == 0
+        assert (decrypted_dir / "recall-archive.sqlite").is_file()
+    else:
+        assert not decrypted_dir.exists()
+        assert result.exit_code == 1
+        assert "--db-dir" in result.output
+
+
 def test_cli_recall_init_failure(cli_runner: CliRunner, tmp_path: Path):
     """wechat-mcp recall exits with code 1 if archive fails to initialize."""
     with patch("wechat_mcp.watcher.recall.RecallArchive", side_effect=Exception("Database locked")):
