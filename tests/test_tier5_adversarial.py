@@ -712,7 +712,7 @@ def test_config_invalid_env_types_and_discovery_fallback(tmp_path: Path, monkeyp
     assert "Specified WeChat account wxid 'wxid_unknown_ghost' not found" in str(exc_wxid.value)
 
 
-def test_cli_adversarial_invocations(tmp_path: Path) -> None:
+def test_cli_adversarial_invocations(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """Stress test click CLI runner under missing arguments, invalid options, and error branches."""
     runner = CliRunner()
 
@@ -732,6 +732,11 @@ def test_cli_adversarial_invocations(tmp_path: Path) -> None:
     assert res3.exit_code == 2
 
     # 4. Sync command with invalid config pointing to nonexistent wxid
+    search_root = tmp_path / "accounts"
+    (search_root / "wxid_synthetic" / "db_storage").mkdir(parents=True)
+    monkeypatch.setattr("wechat_mcp.config.get_search_roots", lambda: [search_root])
+    monkeypatch.delenv("WECHAT_DB_DIR", raising=False)
+    monkeypatch.delenv("WECHAT_WXID", raising=False)
     with tempfile.NamedTemporaryFile("w", suffix=".json") as f:
         json.dump({"wxid": "nonexistent_account_wxid_xyz"}, f)
         f.flush()

@@ -50,7 +50,7 @@ flowchart LR
    ```
    Or install with `uv` from the GitHub Release wheel (or from source):
    ```bash
-   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.1/wechat_mcp-0.1.1-py3-none-any.whl
+   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.2/wechat_mcp-0.1.2-py3-none-any.whl
    # or from source:
    git clone https://github.com/Popcornnnnnnnn/wechat-mcp.git && cd wechat-mcp
    pip install .                # or: uv pip install -e ".[dev]"

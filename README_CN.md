@@ -50,7 +50,7 @@ flowchart LR
    ```
    或使用 `uv` 从 GitHub Release wheel 安装（或从源码安装）：
    ```bash
-   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.1/wechat_mcp-0.1.1-py3-none-any.whl
+   uv tool install https://github.com/Popcornnnnnnnn/wechat-mcp/releases/download/v0.1.2/wechat_mcp-0.1.2-py3-none-any.whl
    # 或源码安装：
    git clone https://github.com/Popcornnnnnnnn/wechat-mcp.git && cd wechat-mcp
    pip install .                # 或使用 uv: uv pip install -e ".[dev]"

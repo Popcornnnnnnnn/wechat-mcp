@@ -100,6 +100,7 @@ def test_fresh_and_stale_cache_behavior(tmp_path: Path) -> None:
 
 def test_run_upgrade_check_json_and_mocked_installers(tmp_path: Path) -> None:
     cache_file = tmp_path / "update-check.json"
+    brew_module = tmp_path / "Cellar/wechat-mcp/0.1.1/libexec/venv/site-packages/wechat_mcp/update.py"
     release = update.ReleaseInfo(
         tag_name="v0.1.2",
         version="0.1.2",
@@ -118,6 +119,7 @@ def test_run_upgrade_check_json_and_mocked_installers(tmp_path: Path) -> None:
         stdout=out,
         stderr=err,
         executable="/opt/homebrew/Cellar/wechat-mcp/0.1.1/libexec/venv/bin/python",
+        module_file=brew_module,
     )
     assert code == 0
     payload = json.loads(out.getvalue())
@@ -137,6 +139,7 @@ def test_run_upgrade_check_json_and_mocked_installers(tmp_path: Path) -> None:
         stdout=io.StringIO(),
         stderr=err,
         executable="/opt/homebrew/Cellar/wechat-mcp/0.1.1/libexec/venv/bin/python",
+        module_file=brew_module,
     )
     assert code == 0
     assert ran == [["brew", "update"], ["brew", "upgrade", "Popcornnnnnnnn/tap/wechat-mcp"]]

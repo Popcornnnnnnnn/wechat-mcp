@@ -46,6 +46,7 @@ from unittest.mock import MagicMock
 from click.testing import CliRunner
 
 from tests.fixtures.crypto_generator import generate_synthetic_encrypted_db
+from wechat_mcp import __version__
 from wechat_mcp.crypto.decrypt import (
     KEY_SZ,
     PAGE_SZ,
@@ -829,7 +830,7 @@ def test_f9_01_cli_entrypoint_help_and_version():
 
     res_ver = runner.invoke(main, ["--version"])
     assert res_ver.exit_code == 0
-    assert "0.1.1" in res_ver.output
+    assert f"wechat-mcp, version {__version__}" in res_ver.output
 
 
 def test_f9_02_cli_subcommand_dispatch():
